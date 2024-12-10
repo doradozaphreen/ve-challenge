@@ -5,23 +5,39 @@ export type TeamType = {
   name: string;
 };
 export type StoreType = {
-  username: string;
+  userName: string;
   teams: TeamType[];
-  setUsername: (username: string) => void;
+  modalOpen: boolean;
+  setUserName: (username: string) => void;
   setTeams: (newteams: TeamType[]) => void;
+  setModalOpen: (isOpen: boolean) => void;
 };
 
-export const useChallengeStore = create<StoreType>()(
+export const useStore = create<StoreType>()(
   persist(
     (set) => ({
-      username: "",
+      userName: "",
       teams: [],
-      setUsername: (newName) => set(() => ({ username: newName })),
+      modalOpen: false,
+      setUserName: (newName) => set(() => ({ userName: newName })),
       setTeams: (newteams) => set(() => ({ teams: newteams })),
+      setModalOpen: (isOpen) => set(() => ({ modalOpen: isOpen })),
     }),
     {
-      name: "challenge-storage",
+      name: "app-storage",
       storage: createJSONStorage(() => localStorage),
     }
   )
 );
+export const useStoreSelector = () => {
+  //states
+  const userName = useStore((state) => state.userName);
+  const teams = useStore((state) => state.teams);
+  const modalOpen = useStore((state) => state.modalOpen);
+  //actions
+  const setUserName = useStore((state) => state.setUserName);
+  const setTeams = useStore((state) => state.setTeams);
+  const setModalOpen = useStore((state) => state.setModalOpen);
+
+  return { userName, setUserName, teams, setTeams, modalOpen, setModalOpen };
+};
