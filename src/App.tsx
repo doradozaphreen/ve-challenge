@@ -1,8 +1,10 @@
-const App = () => {
+import Userform from "./components/user-form";
+
+const App: React.FC = () => {
   return (
-    <div className="bg-red-500">
-      <div>hello world</div>
-    </div>
+    <main className="flex flex-col justify-center w-screen h-screen mx-auto r p-2">
+      <Userform />
+    </main>
   );
 };
 
