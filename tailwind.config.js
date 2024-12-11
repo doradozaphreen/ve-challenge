@@ -1,10 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-import { nextui } from "@nextui-org/theme";
+import { nextui } from "@nextui-org/react";
 export default {
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
-    // "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@nextui-org/theme/dist/components/(button|input|ripple|spinner|form).js",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {

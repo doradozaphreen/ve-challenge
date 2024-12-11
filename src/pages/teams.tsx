@@ -1,13 +1,25 @@
-import { Button } from "@nextui-org/button";
+import { Button } from "@nextui-org/react";
 import { useStoreSelector } from "../store";
 import teamImage from "@/assets/pics/welcome-pic.svg";
-import CreateTeam from "../modals/create-team";
+import CreateTeamModal from "../modals/create-team-modal";
+import JoinTeamModal from "../modals/join-team-modal";
+import { useEffect } from "react";
+import { getTeams } from "../services/teams";
 const Teams = () => {
-  const { userName, setModalOpen, modalOpen } = useStoreSelector();
-  console.log(modalOpen);
-  const handleOpen = () => {
-    setModalOpen(true);
-  };
+  const { userName, setModalOpen, setTeams } = useStoreSelector();
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const response = await getTeams();
+        setTeams(response.payload);
+      } catch (error) {
+        console.log(error);
+        throw new Error("Error fetching teams");
+      }
+    };
+    fetchTeams();
+  }, [setTeams]);
+
   return (
     <div className="flex flex-col justify-center text-center">
       <img
@@ -25,15 +37,24 @@ const Teams = () => {
         Now create or join a team to start the challenge{" "}
       </p>
       <div className="flex flex-row justify-center gap-2 my-2">
-        <Button className=" font-semibold" color="primary" onPress={handleOpen}>
+        <Button
+          className=" font-semibold text-md"
+          color="primary"
+          onPress={() => setModalOpen(true)}
+        >
           Create Team
         </Button>
-        <Button className=" font-semibold" color="primary">
+        <Button
+          className=" font-semibold text-md"
+          color="primary"
+          onPress={() => setModalOpen(true)}
+        >
           Join Team
         </Button>
       </div>
       {/* Modals */}
-      <CreateTeam />
+      <CreateTeamModal />
+      <JoinTeamModal />
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
+import { Button } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 import userImage from "@/assets/pics/welcome-pic.svg";
 import { useNavigate } from "react-router-dom";
 import { useStoreSelector } from "../store";

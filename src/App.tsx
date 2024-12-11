@@ -5,7 +5,7 @@ import Challenges from "./pages/challenges";
 
 const App: React.FC = () => {
   return (
-    <main className="flex flex-col justify-center w-screen h-screen mx-auto r p-2">
+    <main className="flex flex-col justify-center w-screen h-screen mx-auto  p-2">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
