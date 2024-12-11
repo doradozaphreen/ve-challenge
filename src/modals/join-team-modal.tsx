@@ -9,17 +9,16 @@ import { TeamsType, useStoreSelector } from "../store";
 import { Button } from "@nextui-org/react";
 
 const JoinTeamModal: React.FC = () => {
-  const { modalOpen, setModalOpen, teams } = useStoreSelector();
-  console.log("the modal state is " + modalOpen);
+  const { joinTeamOpen, setJoinTeamOpen, teams } = useStoreSelector();
 
   return (
     <Modal
       disableAnimation
       backdrop="blur"
       className="px-2 mx-2 bg-app-text-color min-h-[300px] min-w-[360px] rounded-lg"
-      isOpen={modalOpen}
+      isOpen={joinTeamOpen}
       placement="center"
-      onOpenChange={() => setModalOpen(false)}
+      onOpenChange={() => setJoinTeamOpen(false)}
     >
       <ModalContent>
         {() => (
@@ -56,7 +55,7 @@ const JoinTeamModal: React.FC = () => {
               <Button
                 className="w-10 mx-auto font-semibold"
                 color="primary"
-                onPress={() => setModalOpen(false)}
+                onPress={() => setJoinTeamOpen(false)}
               >
                 Close
               </Button>

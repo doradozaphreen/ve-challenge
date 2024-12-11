@@ -4,17 +4,16 @@ import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 
 const CreateTeamModal: React.FC = () => {
-  const { modalOpen, setModalOpen, setTeamName } = useStoreSelector();
-  console.log("the modal state is " + modalOpen);
+  const { createTeamOpen, setCreateTeamOpen, setTeamName } = useStoreSelector();
 
   return (
     <Modal
       disableAnimation
       backdrop="blur"
       className="px-2 mx-2 bg-app-text-color min-h-[300px] min-w-[360px] rounded-lg"
-      isOpen={modalOpen}
+      isOpen={createTeamOpen}
       placement="center"
-      onOpenChange={() => setModalOpen(false)}
+      onOpenChange={() => setCreateTeamOpen(false)}
     >
       <ModalContent>
         {(onClose) => (

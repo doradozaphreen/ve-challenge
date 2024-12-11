@@ -6,7 +6,8 @@ import JoinTeamModal from "../modals/join-team-modal";
 import { useEffect } from "react";
 import { getTeams } from "../services/teams";
 const Teams = () => {
-  const { userName, setModalOpen, setTeams } = useStoreSelector();
+  const { userName, setTeams, setJoinTeamOpen, setCreateTeamOpen } =
+    useStoreSelector();
   useEffect(() => {
     const fetchTeams = async () => {
       try {
@@ -40,14 +41,14 @@ const Teams = () => {
         <Button
           className=" font-semibold text-md"
           color="primary"
-          onPress={() => setModalOpen(true)}
+          onPress={() => setCreateTeamOpen(true)}
         >
           Create Team
         </Button>
         <Button
           className=" font-semibold text-md"
           color="primary"
-          onPress={() => setModalOpen(true)}
+          onPress={() => setJoinTeamOpen(true)}
         >
           Join Team
         </Button>

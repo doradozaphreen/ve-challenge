@@ -14,11 +14,13 @@ export type StoreType = {
   userName: string;
   teamName: string;
   teams: TeamsType[];
-  modalOpen: boolean;
+  createTeamOpen: boolean;
+  joinTeamOpen: boolean;
   setUserName: (username: string) => void;
   setTeamName: (teamname: string) => void;
   setTeams: (newteams: TeamsType[]) => void;
-  setModalOpen: (isOpen: boolean) => void;
+  setCreateTeamOpen: (isOpen: boolean) => void;
+  setJoinTeamOpen: (isOpen: boolean) => void;
 };
 
 export const useStore = create<StoreType>()(
@@ -27,10 +29,12 @@ export const useStore = create<StoreType>()(
       userName: "",
       teamName: "",
       teams: [],
-      modalOpen: false,
+      createTeamOpen: false,
+      joinTeamOpen: false,
       setUserName: (newName) => set(() => ({ userName: newName })),
       setTeams: (newteams) => set(() => ({ teams: newteams })),
-      setModalOpen: (isOpen) => set(() => ({ modalOpen: isOpen })),
+      setCreateTeamOpen: (isOpen) => set(() => ({ createTeamOpen: isOpen })),
+      setJoinTeamOpen: (isOpen) => set(() => ({ joinTeamOpen: isOpen })),
       setTeamName: (newName) => set(() => ({ teamName: newName })),
     }),
     {
@@ -45,11 +49,14 @@ export const useStoreSelector = () => {
   const teamName = useStore((state) => state.teamName);
   const setTeamName = useStore((state) => state.setTeamName);
   const teams = useStore((state) => state.teams);
-  const modalOpen = useStore((state) => state.modalOpen);
+  const createTeamOpen = useStore((state) => state.createTeamOpen);
+  const joinTeamOpen = useStore((state) => state.joinTeamOpen);
+
   //actions
   const setUserName = useStore((state) => state.setUserName);
   const setTeams = useStore((state) => state.setTeams);
-  const setModalOpen = useStore((state) => state.setModalOpen);
+  const setCreateTeamOpen = useStore((state) => state.setCreateTeamOpen);
+  const setJoinTeamOpen = useStore((state) => state.setJoinTeamOpen);
 
   return {
     userName,
@@ -58,7 +65,9 @@ export const useStoreSelector = () => {
     teams,
     setTeamName,
     setTeams,
-    modalOpen,
-    setModalOpen,
+    createTeamOpen,
+    joinTeamOpen,
+    setCreateTeamOpen,
+    setJoinTeamOpen,
   };
 };
