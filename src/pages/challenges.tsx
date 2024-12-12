@@ -1,26 +1,9 @@
-import { useEffect } from "react";
 import { Button } from "@nextui-org/react";
 import { useStoreSelector } from "../store";
-import { getTeams } from "../services/teams";
 import teamImage from "@/assets/pics/pic3.svg";
-import CreateTeamModal from "../modals/create-team-modal";
-import JoinTeamModal from "../modals/join-team-modal";
 
 const Challenges: React.FC = () => {
-  const { userData, setTeams, setCreateTeamOpen, teamName } =
-    useStoreSelector();
-  useEffect(() => {
-    const fetchTeams = async () => {
-      try {
-        const response = await getTeams();
-        setTeams(response.payload);
-      } catch (error) {
-        console.log(error);
-        throw new Error("Error fetching teams");
-      }
-    };
-    fetchTeams();
-  }, [setTeams]);
+  const { userData, teamName } = useStoreSelector();
 
   return (
     <div className="flex flex-col h-full justify-between text-center">
@@ -33,22 +16,25 @@ const Challenges: React.FC = () => {
         <p className="text-2xl font-bold ">
           Team <span className="text-app-primary-color ">{teamName} </span>{" "}
         </p>
-        <p className="text-lg">
+        <p className="text-lg font-semibold">
           Now create or join a team to start the challenge{" "}
         </p>
-        <div className="flex flex-row justify-center gap-2 my-2">
-          <Button
-            className=" font-semibold text-md text-white"
-            color="primary"
-            onPress={() => setCreateTeamOpen(true)}
-          >
-            Challenge List
-          </Button>
+        <div className="flex flex-col justify-center gap-2 my-2 grow">
+          <div className=" flex flex-col grow border rounded-lg p-2 shadow-xl">
+            <p className="text-2xl font-bold mb-4">CHALLENGES</p>
+            <div className="flex justify-between">
+              <p className="font-bold text-xl">The dark revenge</p>
+              <Button
+                className="w-10 text-app-text-color font-bold"
+                size="sm"
+                color="success"
+              >
+                Start
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
-      {/* Modals */}
-      <CreateTeamModal />
-      <JoinTeamModal />
     </div>
   );
 };
