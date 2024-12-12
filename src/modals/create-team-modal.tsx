@@ -2,10 +2,25 @@ import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { useStoreSelector } from "../store";
 import { Input } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
+import toast from "react-hot-toast";
+import { createTeam } from "../services/teams";
+import { useState } from "react";
 
 const CreateTeamModal: React.FC = () => {
-  const { createTeamOpen, setCreateTeamOpen, setTeamName } = useStoreSelector();
+  const { createTeamOpen, setCreateTeamOpen, userData } = useStoreSelector();
+  const [teamName, setTeamName] = useState<string>("");
 
+  const handleRegisterTeam = async () => {
+    const response = await createTeam({
+      name: teamName,
+      userId: Number(userData.id), // pedir cambiar id a string para enviar el uuuid
+    });
+    if (response.status !== 200 && response.status !== 201) {
+      toast.error(response.payload.message);
+    } else {
+      toast.success("Success, team created!!!");
+    }
+  };
   return (
     <Modal
       disableAnimation
@@ -16,7 +31,7 @@ const CreateTeamModal: React.FC = () => {
       onOpenChange={() => setCreateTeamOpen(false)}
     >
       <ModalContent>
-        {(onClose) => (
+        {() => (
           <>
             <ModalHeader className="flex flex-col justify-center text-center font-bold">
               <p className="text-2xl font-semibold">Create a new team</p>
@@ -33,7 +48,7 @@ const CreateTeamModal: React.FC = () => {
               <Button
                 className="w-10 mx-auto"
                 color="primary"
-                onPress={onClose}
+                onPress={handleRegisterTeam}
               >
                 Create
               </Button>

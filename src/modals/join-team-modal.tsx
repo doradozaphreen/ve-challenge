@@ -7,10 +7,21 @@ import {
 } from "@nextui-org/react";
 import { TeamsType, useStoreSelector } from "../store";
 import { Button } from "@nextui-org/react";
+import { joinTeam } from "../services/teams";
+import toast from "react-hot-toast";
 
 const JoinTeamModal: React.FC = () => {
   const { joinTeamOpen, setJoinTeamOpen, teams } = useStoreSelector();
+  console.log(teams);
 
+  const handleJoinTeam = async (code: string) => {
+    const response = await joinTeam({ code, studentId: 1 });
+    if (response.status !== 200 && response.status !== 201) {
+      toast.error(response.payload.message);
+    } else {
+      toast.success("Success, team joined!!!");
+    }
+  };
   return (
     <Modal
       disableAnimation
@@ -40,6 +51,7 @@ const JoinTeamModal: React.FC = () => {
                       className="w-10 text-app-text-color font-bold"
                       size="sm"
                       color="success"
+                      onPress={() => handleJoinTeam(team.code)}
                     >
                       Join
                     </Button>

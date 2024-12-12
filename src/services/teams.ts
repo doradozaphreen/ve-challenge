@@ -7,6 +7,13 @@ export const RegisterTeamSchema = z.object({
   userId: z.number().min(1),
 });
 export type RegisterTeamType = z.infer<typeof RegisterTeamSchema>;
+export const JoinTeamSchema = z.object({
+  code: z.string(),
+  studentId: z.number(),
+});
+export type JoinTeamType = z.infer<typeof JoinTeamSchema>;
+const token = Cookies.get("token") || "";
+
 //CREATE TEAM SERVICE
 export async function createTeam(data: RegisterTeamType) {
   const result = RegisterTeamSchema.safeParse(data);
@@ -26,13 +33,24 @@ export async function createTeam(data: RegisterTeamType) {
 // GET TEAMS
 export async function getTeams() {
   // const token = String(getCookie("token") || "");
-  const token = Cookies.get("token") || "";
   try {
     const response = await fetchApi("/team", "GET", {}, token);
     const parsedResponse = await response.json();
     return { payload: parsedResponse, status: response.status };
   } catch (error: unknown) {
-    console.error("Error during register team", error);
+    console.error("Error during getting teams", error);
+    throw new Error("An unexpected error occurred");
+  }
+}
+
+//JOIN TEAM SERVICE
+export async function joinTeam(data: JoinTeamType) {
+  try {
+    const response = await fetchApi(`/team/member/add`, "PUT", data, token);
+    const parsedResponse = await response.json();
+    return { payload: parsedResponse, status: response.status };
+  } catch (error: unknown) {
+    console.error("Error during getting teams", error);
     throw new Error("An unexpected error occurred");
   }
 }

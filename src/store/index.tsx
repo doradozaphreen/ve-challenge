@@ -1,5 +1,9 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+export type UserType = {
+  id: string;
+  userName: string;
+};
 export type TeamType = {
   id: number;
   name: string;
@@ -11,12 +15,12 @@ export type TeamsType = {
   createdAt: string;
 };
 export type StoreType = {
-  userName: string;
+  userData: UserType;
   teamName: string;
   teams: TeamsType[];
   createTeamOpen: boolean;
   joinTeamOpen: boolean;
-  setUserName: (username: string) => void;
+  setUserData: (newData: UserType) => void;
   setTeamName: (teamname: string) => void;
   setTeams: (newteams: TeamsType[]) => void;
   setCreateTeamOpen: (isOpen: boolean) => void;
@@ -26,12 +30,12 @@ export type StoreType = {
 export const useStore = create<StoreType>()(
   persist(
     (set) => ({
-      userName: "",
-      teamName: "",
+      userData: { id: "1", userName: "Diego Dorado" },
+      teamName: "The rookies",
       teams: [],
       createTeamOpen: false,
       joinTeamOpen: false,
-      setUserName: (newName) => set(() => ({ userName: newName })),
+      setUserData: (newData) => set(() => ({ userData: newData })),
       setTeams: (newteams) => set(() => ({ teams: newteams })),
       setCreateTeamOpen: (isOpen) => set(() => ({ createTeamOpen: isOpen })),
       setJoinTeamOpen: (isOpen) => set(() => ({ joinTeamOpen: isOpen })),
@@ -40,12 +44,13 @@ export const useStore = create<StoreType>()(
     {
       name: "app-storage",
       storage: createJSONStorage(() => localStorage),
+      version: 1,
     }
   )
 );
 export const useStoreSelector = () => {
   //states
-  const userName = useStore((state) => state.userName);
+  const userData = useStore((state) => state.userData);
   const teamName = useStore((state) => state.teamName);
   const setTeamName = useStore((state) => state.setTeamName);
   const teams = useStore((state) => state.teams);
@@ -53,14 +58,14 @@ export const useStoreSelector = () => {
   const joinTeamOpen = useStore((state) => state.joinTeamOpen);
 
   //actions
-  const setUserName = useStore((state) => state.setUserName);
+  const setUserData = useStore((state) => state.setUserData);
   const setTeams = useStore((state) => state.setTeams);
   const setCreateTeamOpen = useStore((state) => state.setCreateTeamOpen);
   const setJoinTeamOpen = useStore((state) => state.setJoinTeamOpen);
 
   return {
-    userName,
-    setUserName,
+    userData,
+    setUserData,
     teamName,
     teams,
     setTeamName,
